@@ -1,29 +1,38 @@
-import React from 'react'
+import React from "react";
+import ButtonComponent from "../button/ButtonComponent";
+import QuestionAndUserComponent from "./QuestionAndUserComponent";
 
 export default function QuestionCardComponent(props) {
     return (
-        <>
+        <div key={props.data.id}>
             <div className="row">
-                <div className="col-1">
+                <div className="col-1 text-center">
                     {props.data.answers.length}
                     <div>answers</div>
                 </div>
                 <div className="col-11">
-                    <a className="text-info text-decoration-none">{props.data.question}</a>
-                    <div>{props.data.answers[0].answer}</div>
+                    {props.questionShow === undefined && (
+                        <ButtonComponent
+                            variant="text"
+                            className="text-info text-decoration-none"
+                            title={props.data.question}
+                            handleclick={props.handleclick}
+                        />
+                    )}
+                    <div>
+                        {props.showDescription
+                            ? props.data.description
+                            : `${props.data.description.substring(0, 200)}...`}
+                    </div>
+                    {/* <div>{props.data.answers[0].answer}</div> */}
                 </div>
             </div>
-            <div className="d-flex justify-content-end">
-                <div>asked 33 sec ago
-                <div>
-                    <img
-                        src="http://bestprofilepix.com/wp-content/uploads/2014/03/sad-and-alone-boys-facebook-profile-pictures.jpg"
-                        height="35px"
-                    />
-                    <span>Series Chikanbanjar</span>
-                </div>
-                </div>
-            </div>
-        </>
-    )
+            <QuestionAndUserComponent
+                data={props.data.key}
+                time={"asked 33 sec ago"}
+                user={"Series Chikanbanjar"}
+            />
+            <hr />
+        </div>
+    );
 }

@@ -1,27 +1,38 @@
-import React from 'react';
-import ButtonComponent from '../../component/button/ButtonComponent';
-import QuestionCardComponent from '../../component/cards/QuestionCardComponent';
-import { questions } from '../../data/questions';
+import React from "react";
+import QuestionCardComponent from "../../component/cards/QuestionCardComponent";
+import { questions } from "../../data/questions";
+import { useHistory } from "react-router-dom";
+import HeaderComponent from "../../component/header/HeaderComponent";
 
 export default function Home() {
+    const history = useHistory();
+    const handleClick = (item) => {
+        console.log("on click", item);
+        history.push({ pathname: "/question", state: { data: item } });
+    };
     return (
         <div>
             Home
-            <div className="d-flex justify-content-between w-100">
-                All Questions
-                <ButtonComponent title="Ask Question" />
-            </div>
-            <div>
-                27 questions
-            </div>
+            <HeaderComponent />
+            <div>27 questions</div>
             <hr />
             <div>
                 {questions.map((item) => {
-                    return(
-                        <QuestionCardComponent data={item} />
-                    )
+                    return (
+                        <div
+                            className="d-flex justify-content-center"
+                            key={item.id}
+                        >
+                            <div className="w-75">
+                                <QuestionCardComponent
+                                    data={item}
+                                    handleclick={() => handleClick(item)}
+                                />
+                            </div>
+                        </div>
+                    );
                 })}
             </div>
         </div>
-    )
+    );
 }
